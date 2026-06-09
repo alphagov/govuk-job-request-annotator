@@ -29,8 +29,3 @@ Once deployed you can watch the logs and inspect the admission requests and resp
 # Deploying to prod
 
 Merge changes into main and make a release, this will build and push the latest code to our ecr repo. Then update the terraform to point to the new release tag.
-
-### Steps to production
-
-1. on deploy increment helm chart app version (stretch)
-1. pull list of system namespaces from somewhere (stretch)
