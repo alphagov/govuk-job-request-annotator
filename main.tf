@@ -1,8 +1,8 @@
 locals {
-  ns = "cloud-platform-label-pods"
+  ns = "job-request-annotator"
 }
 
-resource "kubernetes_namespace" "label-pods" {
+resource "kubernetes_namespace" "annotator" {
   metadata {
     name = local.ns
 
@@ -22,9 +22,9 @@ resource "kubernetes_namespace" "label-pods" {
 
 resource "helm_release" "label-pods" {
   name       = "label-pods-controller"
-  namespace  = local.ns
+  namespace  = kubernetes_namespace_v1.annotator.id
   chart      = "cloud-platform-label-pods"
-  repository = "https://ministryofjustice.github.io/cloud-platform-helm-charts"
+  repository = "https://ministryofjustice.github.io/cloud-platform-helm-charts" // TODO: update this helm chart
   version    = var.chart_version
 
   values = [templatefile("${path.module}/templates/values.yaml.tpl", {

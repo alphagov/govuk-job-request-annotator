@@ -27,13 +27,13 @@ func createAdmReviewFail(admReview v1.AdmissionReview, resp v1.AdmissionResponse
 	return responseBody, nil
 }
 
-func createAdmReviewSucc(admReview v1.AdmissionReview, resp v1.AdmissionResponse, githubTeamName string, createAnnoField bool) ([]byte, error) {
+func createAdmReviewSucc(admReview v1.AdmissionReview, resp v1.AdmissionResponse, username string, createAnnoField bool) ([]byte, error) {
 	resp.AuditAnnotations = map[string]string{
-		"metadata.annotations.github_teams": "mutation added for identification",
+		"metadata.annotations.created_by": "mutation added for identification",
 	}
 
 	// the actual mutation is done by a string in JSONPatch style, i.e. we don't _actually_ modify the object, but
-	// tell K8S how it should modifiy it
+	// tell K8S how it should modify it
 	pT := v1.PatchTypeJSONPatch
 	resp.PatchType = &pT
 
@@ -60,8 +60,8 @@ func createAdmReviewSucc(admReview v1.AdmissionReview, resp v1.AdmissionResponse
 
 	patch := Patch{
 		"add",
-		"/metadata/annotations/github_teams",
-		githubTeamName,
+		"/metadata/annotations/created_by",
+		username,
 	}
 	p = append(p, patch)
 
@@ -89,7 +89,7 @@ func createAdmReviewSucc(admReview v1.AdmissionReview, resp v1.AdmissionResponse
 	return responseBody, nil
 }
 
-func Mutate(body []byte, getGithubTeamName func(string) string) ([]byte, error) {
+func Mutate(body []byte) ([]byte, error) {
 	log.Printf("recv: %s\n", string(body))
 
 	annoFieldExists := true
@@ -131,9 +131,9 @@ func Mutate(body []byte, getGithubTeamName func(string) string) ([]byte, error) 
 		annoFieldExists = false
 	}
 
-	githubTeamName := getGithubTeamName(pod.GetNamespace())
+	username := admReview.Request.UserInfo.DeepCopy().Username
 
-	responseBody, succErr := createAdmReviewSucc(admReview, resp, githubTeamName, !annoFieldExists)
+	responseBody, succErr := createAdmReviewSucc(admReview, resp, username, !annoFieldExists)
 	if succErr != nil {
 		return nil, succErr
 	}
