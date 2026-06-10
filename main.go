@@ -9,7 +9,7 @@ import (
 	"os"
 	"time"
 
-	"github.com/ministryofjustice/cloud-platform-label-pods/init_app"
+	"github.com/alphagov/govuk-job-request-annotator/init_app"
 )
 
 type Server struct {

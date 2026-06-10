@@ -1,8 +1,8 @@
 package init_app
 
 import (
+	"github.com/alphagov/govuk-job-request-annotator/routes"
 	"github.com/gin-gonic/gin"
-	"github.com/ministryofjustice/cloud-platform-label-pods/routes"
 )
 
 func InitGin(ginMode string) *gin.Engine {

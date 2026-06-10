@@ -1,8 +1,8 @@
 build:
-	go build -o cloud-platform-label-pods-bin .
+	go build -o govuk-job-request-annotator-bin .
 
 run:
-	go run cloud-platform-label-pods-bin .
+	go run gov-uk-job-request-annotator-bin .
 
 test:
 	go test -race -covermode=atomic -coverprofile=c.out -v ./...

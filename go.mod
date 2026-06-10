@@ -1,4 +1,4 @@
-module github.com/ministryofjustice/cloud-platform-label-pods
+module github.com/alphagov/govuk-job-request-annotator
 
 go 1.22.0
 
