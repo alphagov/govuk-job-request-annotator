@@ -4,8 +4,8 @@ import (
 	"io"
 	"net/http"
 
-	m "github.com/alphagov/govuk-terraform-job-request-annotator/pkg/mutate"
-	"github.com/alphagov/govuk-terraform-job-request-annotator/utils"
+	m "github.com/alphagov/govuk-job-request-annotator/pkg/mutate"
+	"github.com/alphagov/govuk-job-request-annotator/utils"
 	"github.com/gin-gonic/gin"
 )
 
