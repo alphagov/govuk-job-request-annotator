@@ -10,7 +10,7 @@ import (
 )
 
 func initMutatePod(r *gin.Engine) {
-	r.POST("/mutate/config-map", func(c *gin.Context) {
+	r.POST("/mutate/configmap", func(c *gin.Context) {
 		body, err := io.ReadAll(c.Request.Body)
 		defer c.Request.Body.Close()
 
